@@ -512,31 +512,23 @@ function Set-SPOListIRMEnabled
 		[bool]$Enabled=$true
 		)
    
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.IrmEnabled=$Enabled
     $ll.Update()
 
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
-
         catch [Net.WebException] 
-        {
-            
+        {           
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
-
+         
 }
 
 
-#
-#
-#
-#
 #
 #
 # 
@@ -550,11 +542,7 @@ function Set-SPOListIRMEnabled
 #
 #
 #
-#
-#
-#
-#
-#
+
 
 
 function Get-SPOListView
@@ -567,7 +555,6 @@ function Get-SPOListView
   #>
 
 
-
  param (
         [Parameter(ParameterSetName="seta", Mandatory=$true,Position=0)]
 		[string]$ListName="",
@@ -576,11 +563,7 @@ function Get-SPOListView
         [Parameter(Mandatory=$false,Position=0)]
 		[switch]$IncludeAllProperties
 		)
-  <#
-	.link
-	http://social.technet.microsoft.com/wiki/contents/articles/32335.sharepoint-online-spomod-get-spolist.aspx
 
-  #>
   switch ($PsCmdlet.ParameterSetName) 
     { 
     "seta"  { $list=$ctx.Web.Lists.GetByTitle($ListName); break} 
@@ -703,16 +686,18 @@ function Set-SPOListView
 		[Int]$RowLimit
 		)
 
-$ll
-  $vv
    switch ($PsCmdlet.ParameterSetName) 
     { 
-    "seta"  { 
-    $ll=$ctx.Web.Lists.GetByTitle($ListName)
-    $vv=$ll.Views.GetByTitle($ViewName); break} 
-    "setb"  { 
-    $ll=$ctx.Web.Lists.GetByID($ListGUID)
-    $vv=$ll.Views.GetByID($ViewGUID); break} 
+        "seta"  
+        { 
+            $ll=$ctx.Web.Lists.GetByTitle($ListName)
+            $vv=$ll.Views.GetByTitle($ViewName); break
+        } 
+        "setb"  
+        { 
+            $ll=$ctx.Web.Lists.GetByID($ListGUID)
+            $vv=$ll.Views.GetByID($ViewGUID); break
+        } 
     }
     $ctx.Load($vv)
     $ctx.ExecuteQuery()
@@ -731,8 +716,7 @@ $ll
         if($PSBoundParameters.ContainsKey("Aggregations"))
   {
   $vv.Aggregations=$Aggregations
-  }
-        
+  }     
         if($PSBoundParameters.ContainsKey("DefaultViewForContentType"))
   {
   $vv.DefaultViewForContentType=$DefaultViewForContentType
@@ -830,38 +814,33 @@ function New-SPOListView
   $vv.ViewFields=$ViewFields
   }
 
-  $ll
+  
    switch ($PsCmdlet.ParameterSetName) 
     { 
-    "seta"  { 
-    $ll=$ctx.Web.Lists.GetByTitle($ListName); break} 
-    "setb"  { 
-    $ll=$ctx.Web.Lists.GetByID($ListGUID); break} 
+        "seta"  
+        { 
+        $ll=$ctx.Web.Lists.GetByTitle($ListName); break
+        } 
+        "setb"  
+        { 
+        $ll=$ctx.Web.Lists.GetByID($ListGUID); break
+        } 
     }
     $ctx.Load($ll)
     $ctx.Load($ll.Views)
     $ctx.ExecuteQuery()
-$listViewToadd=$ll.Views.Add($vv)
-$ctx.Load($listViewToadd)
-$ctx.ExecuteQuery()
-
+    $listViewToadd=$ll.Views.Add($vv)
+    $ctx.Load($listViewToadd)
+    $ctx.ExecuteQuery()
 }
-#
-#
-#
-#
-#
+
+
+
 #
 # 
 #
 #
 # Column Cmdlets
-#
-#
-#
-#
-#
-#
 #
 #
 #
@@ -997,15 +976,17 @@ param (
 
    $FieldOptions=[Microsoft.SharePoint.Client.AddFieldOptions]::AddToAllContentTypes 
    $xml="<Field Type='"+$FieldType+"' Description='"+$Description+"' Required='"+$Required+"' Group='"+$Group+"' StaticName='"+$StaticName+"' Name='"+$Name+"' DisplayName='"+$FieldDisplayName+"' Version='"+$Version+"'></Field>"    
+   
    if($LookupListGUID)
-   {$xml=$xml.Replace("></Field>"," List='"+$LookupListGUID+"' ShowField='"+$LookupField+"'></Field>")}
+   {
+       $xml=$xml.Replace("></Field>"," List='"+$LookupListGUID+"' ShowField='"+$LookupField+"'></Field>")
+    }
    Write-Host $xml
-$List.Fields.AddFieldAsXml($xml,$true,$FieldOptions) 
-$List.Update() 
+    $List.Fields.AddFieldAsXml($xml,$true,$FieldOptions) 
+    $List.Update() 
  
   try
      {
-       
          $ctx.ExecuteQuery()
          Write-Host "Field " $FieldDisplayName " has been added to " $ListTitle
      }
@@ -1032,7 +1013,6 @@ $List.Update()
      {
        $ctx.Load($List.Views)
        $ctx.ExecuteQuery()
-
        $vv=$List.Views.GetByTitle($AddToView.Trim())
        $ctx.Load($vv)
           $ctx.ExecuteQuery()
@@ -1040,10 +1020,7 @@ $List.Update()
           $vv.Update()
           $ctx.ExecuteQuery()
           Write-Verbose "Adding to the view "
-
-     
      }
-
 
 }
 
@@ -1101,6 +1078,7 @@ param (
   $ctx.ExecuteQuery()
   $lci=$List.Fields.GetByInternalNameOrTitle($FieldTitle)
    $ctx.ExecuteQuery()
+
   if($PSBoundParameters.ContainsKey("Description"))
   {
   $lci.Description=$Description
@@ -1159,12 +1137,11 @@ param (
   $lci.Tag=$Tag
   }
 
-
   $lci.Update()
   $ctx.load($lci)
+
   try
-     {
-       
+     { 
          $ctx.ExecuteQuery()
          Write-Host $FieldTitle " has been updated"
      }
@@ -1172,9 +1149,6 @@ param (
      { 
         Write-Host $_.Exception.ToString()
      }
-
-     
-
 
 
 }
@@ -1198,12 +1172,12 @@ param (
 
 		)
 
-  $List=$ctx.Web.Lists.GetByTitle($ListTitle)
-  $ctx.ExecuteQuery()
-  $Field=$List.Fields.GetByTitle($FieldTitle)
-   $ctx.ExecuteQuery()
-   $Field.DeleteObject()
-   $ctx.ExecuteQuery()
+    $List=$ctx.Web.Lists.GetByTitle($ListTitle)
+    $ctx.ExecuteQuery()
+    $Field=$List.Fields.GetByTitle($FieldTitle)
+    $ctx.ExecuteQuery()
+    $Field.DeleteObject()
+    $ctx.ExecuteQuery()
 
 }
 
@@ -1231,6 +1205,7 @@ param (
 
   $List=$ctx.Web.Lists.GetByTitle($ListTitle)
   $ctx.ExecuteQuery()
+
   if($PSBoundParameters.ContainsKey("FieldTitle"))
   {
   $Field=$List.Fields.GetByInternalNameorTitle($FieldTitle)
@@ -1239,6 +1214,7 @@ param (
   {
   $Field=$List.Fields.GetById($FieldID)
   }
+
    $ctx.ExecuteQuery()
    $Field.IsObjectPropertyInstantiated($ObjectPropertyName)
    $ctx.ExecuteQuery()
@@ -1270,6 +1246,7 @@ param (
 
   $List=$ctx.Web.Lists.GetByTitle($ListTitle)
   $ctx.ExecuteQuery()
+
   if($PSBoundParameters.ContainsKey("FieldTitle"))
   {
   $Field=$List.Fields.GetByInternalNameorTitle($FieldTitle)
@@ -1278,6 +1255,7 @@ param (
   {
   $Field=$List.Fields.GetById($FieldID)
   }
+
    $ctx.ExecuteQuery()
    $Field.IsPropertyAvailable($PropertyName)
    $ctx.ExecuteQuery()
@@ -1288,7 +1266,6 @@ param (
 
 function New-SPOListChoiceColumn
 {
-
 
 <#
 	.link
@@ -1356,8 +1333,8 @@ param (
    
    
    Write-Host $xml
-$List.Fields.AddFieldAsXml($xml,$true,$FieldOptions) 
-$List.Update() 
+    $List.Fields.AddFieldAsXml($xml,$true,$FieldOptions) 
+    $List.Update() 
  
   try
      {
@@ -1371,9 +1348,6 @@ $List.Update()
      }
 
      
-
-
-
 }
 
 
@@ -3334,14 +3308,12 @@ function  Get-SPOHashTagsTerms
     [int]$LanguageID=1033,
     [Parameter(Mandatory=$false)]
     $GUID=""
-    
     )
 
     BEGIN{
         $session = [Microsoft.SharePoint.Client.Taxonomy.TaxonomySession]::GetTaxonomySession($ctx)
         $ctx.Load($session)
-        $ctx.ExecuteQuery()
-        
+        $ctx.ExecuteQuery()     
         }
     PROCESS{
         $termstore = $session.GetDefaultSiteCollectionTermStore()
@@ -3361,7 +3333,11 @@ function  Get-SPOHashTagsTerms
         $ctx.Load($group)
         $ctx.Load($group.TermSets)
         $ctx.ExecuteQuery()
-        if($GUID -eq ""){$GUID = [guid]::NewGuid()}
+
+        if($GUID -eq "")
+        {
+            $GUID = [guid]::NewGuid()
+        }
         
         $termSet=$group.CreateTermSet($TermSetName, $GUID, $LanguageID)
         $ctx.ExecuteQuery()
@@ -3554,10 +3530,6 @@ param (
 
      }
      
-
-   
-     
-
 
 
 }
