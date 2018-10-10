@@ -22,29 +22,12 @@ function Get-SPOListCount
 	.link
 	http://social.technet.microsoft.com/wiki/contents/articles/32342.sharepoint-online-spomod-get-spolistcount.aspx
 
-  #>
+  #>
+
   $ctx.Load($ctx.Web.Lists)
   $ctx.ExecuteQuery()
   
-  Write-Host $ctx.Web.Lists.Count
-  <#
-  $i=0
-
-  foreach( $ll in $ctx.Web.Lists)
-  {
-            
-        $i++
-
-        
-        }
-  
-        $obj = New-Object PSObject
-        $obj | Add-Member NoteProperty Url($ctx.Web.Url)
-        $obj | Add-Member NoteProperty Count($i)
-        
-        Write-Output $obj
-  #>
-  
+  return $ctx.Web.Lists.Count 
   }
 
 
@@ -68,6 +51,7 @@ function Get-SPOList
   $ctx.ExecuteQuery()
   Write-Host 
   Write-Host $ctx.Url -BackgroundColor White -ForegroundColor DarkGreen
+  
   foreach( $ll in $ctx.Web.Lists)
   {     
         $ctx.Load($ll.RootFolder)
@@ -76,7 +60,7 @@ function Get-SPOList
         $ctx.Load($ll.WorkflowAssociations)
         try
         {
-        $ctx.ExecuteQuery()
+            $ctx.ExecuteQuery()
         }
         catch
         {
@@ -85,72 +69,55 @@ function Get-SPOList
         if($IncludeAllProperties)
         {
         
-        $obj = New-Object PSObject
-  $obj | Add-Member NoteProperty Title($ll.Title)
-  $obj | Add-Member NoteProperty Created($ll.Created)
-  $obj | Add-Member NoteProperty Tag($ll.Tag)
-  $obj | Add-Member NoteProperty RootFolder.ServerRelativeUrl($ll.RootFolder.ServerRelativeUrl)
-  $obj | Add-Member NoteProperty BaseType($ll.BaseType)
-  $obj | Add-Member NoteProperty BaseTemplate($ll.BaseTemplate)
-  $obj | Add-Member NoteProperty AllowContenttypes($ll.AllowContenttypes)
-  $obj | Add-Member NoteProperty ContentTypesEnabled($ll.ContentTypesEnabled)
-  $obj | Add-Member NoteProperty DefaultView.Title($ll.DefaultView.Title)
-  $obj | Add-Member NoteProperty Description($ll.Description)
-  $obj | Add-Member NoteProperty DocumentTemplateUrl($ll.DocumentTemplateUrl)
-  $obj | Add-Member NoteProperty DraftVersionVisibility($ll.DraftVersionVisibility)
-  $obj | Add-Member NoteProperty EnableAttachments($ll.EnableAttachments)
-  $obj | Add-Member NoteProperty EnableMinorVersions($ll.EnableMinorVersions)
-  $obj | Add-Member NoteProperty EnableFolderCreation($ll.EnableFolderCreation)
-  $obj | Add-Member NoteProperty EnableVersioning($ll.EnableVersioning)
-  $obj | Add-Member NoteProperty EnableModeration($ll.EnableModeration)
-  $obj | Add-Member NoteProperty Fields.Count($ll.Fields.Count)
-  $obj | Add-Member NoteProperty ForceCheckout($ll.ForceCheckout)
-  $obj | Add-Member NoteProperty Hidden($ll.Hidden)
-  $obj | Add-Member NoteProperty Id($ll.Id)
-  $obj | Add-Member NoteProperty IRMEnabled($ll.IRMEnabled)
-  $obj | Add-Member NoteProperty IsApplicationList($ll.IsApplicationList)
-  $obj | Add-Member NoteProperty IsCatalog($ll.IsCatalog)
-  $obj | Add-Member NoteProperty IsPrivate($ll.IsPrivate)
-  $obj | Add-Member NoteProperty IsSiteAssetsLibrary($ll.IsSiteAssetsLibrary)
-  $obj | Add-Member NoteProperty ItemCount($ll.ItemCount)
-  $obj | Add-Member NoteProperty LastItemDeletedDate($ll.LastItemDeletedDate)
-  $obj | Add-Member NoteProperty MultipleDataList($ll.MultipleDataList)
-  $obj | Add-Member NoteProperty NoCrawl($ll.NoCrawl)
-  $obj | Add-Member NoteProperty OnQuickLaunch($ll.OnQuickLaunch)
-  $obj | Add-Member NoteProperty ParentWebUrl($ll.ParentWebUrl)
-  $obj | Add-Member NoteProperty TemplateFeatureId($ll.TemplateFeatureId)
-  $obj | Add-Member NoteProperty Views.Count($ll.Views.Count)
-  $obj | Add-Member NoteProperty WorkflowAssociations.Count($ll.WorkflowAssociations.Count)
+            $obj = New-Object PSObject
+            $obj | Add-Member NoteProperty Title($ll.Title)
+            $obj | Add-Member NoteProperty Created($ll.Created)
+            $obj | Add-Member NoteProperty Tag($ll.Tag)
+            $obj | Add-Member NoteProperty RootFolder.ServerRelativeUrl($ll.RootFolder.ServerRelativeUrl)
+            $obj | Add-Member NoteProperty BaseType($ll.BaseType)
+            $obj | Add-Member NoteProperty BaseTemplate($ll.BaseTemplate)
+            $obj | Add-Member NoteProperty AllowContenttypes($ll.AllowContenttypes)
+            $obj | Add-Member NoteProperty ContentTypesEnabled($ll.ContentTypesEnabled)
+            $obj | Add-Member NoteProperty DefaultView.Title($ll.DefaultView.Title)
+            $obj | Add-Member NoteProperty Description($ll.Description)
+            $obj | Add-Member NoteProperty DocumentTemplateUrl($ll.DocumentTemplateUrl)
+            $obj | Add-Member NoteProperty DraftVersionVisibility($ll.DraftVersionVisibility)
+            $obj | Add-Member NoteProperty EnableAttachments($ll.EnableAttachments)
+            $obj | Add-Member NoteProperty EnableMinorVersions($ll.EnableMinorVersions)
+            $obj | Add-Member NoteProperty EnableFolderCreation($ll.EnableFolderCreation)
+            $obj | Add-Member NoteProperty EnableVersioning($ll.EnableVersioning)
+            $obj | Add-Member NoteProperty EnableModeration($ll.EnableModeration)
+            $obj | Add-Member NoteProperty Fields.Count($ll.Fields.Count)
+            $obj | Add-Member NoteProperty ForceCheckout($ll.ForceCheckout)
+            $obj | Add-Member NoteProperty Hidden($ll.Hidden)
+            $obj | Add-Member NoteProperty Id($ll.Id)
+            $obj | Add-Member NoteProperty IRMEnabled($ll.IRMEnabled)
+            $obj | Add-Member NoteProperty IsApplicationList($ll.IsApplicationList)
+            $obj | Add-Member NoteProperty IsCatalog($ll.IsCatalog)
+            $obj | Add-Member NoteProperty IsPrivate($ll.IsPrivate)
+            $obj | Add-Member NoteProperty IsSiteAssetsLibrary($ll.IsSiteAssetsLibrary)
+            $obj | Add-Member NoteProperty ItemCount($ll.ItemCount)
+            $obj | Add-Member NoteProperty LastItemDeletedDate($ll.LastItemDeletedDate)
+            $obj | Add-Member NoteProperty MultipleDataList($ll.MultipleDataList)
+            $obj | Add-Member NoteProperty NoCrawl($ll.NoCrawl)
+            $obj | Add-Member NoteProperty OnQuickLaunch($ll.OnQuickLaunch)
+            $obj | Add-Member NoteProperty ParentWebUrl($ll.ParentWebUrl)
+            $obj | Add-Member NoteProperty TemplateFeatureId($ll.TemplateFeatureId)
+            $obj | Add-Member NoteProperty Views.Count($ll.Views.Count)
+            $obj | Add-Member NoteProperty WorkflowAssociations.Count($ll.WorkflowAssociations.Count)
 
-
-
-        Write-Output $obj
-
+            Write-Output $obj
         }
         else
         {
-
-        
-       
-        
-        $obj = New-Object PSObject
-  $obj | Add-Member NoteProperty Title($ll.Title)
-  $obj | Add-Member NoteProperty Created($ll.Created)
-  $obj | Add-Member NoteProperty RootFolder.ServerRelativeUrl($ll.RootFolder.ServerRelativeUrl)
-        
-        
-        Write-Output $obj
-        
-        
-     }  
-        
-        }
-  
-        
-
-  
-  
-  }
+            $obj = New-Object PSObject
+            $obj | Add-Member NoteProperty Title($ll.Title)
+            $obj | Add-Member NoteProperty Created($ll.Created)
+            $obj | Add-Member NoteProperty RootFolder.ServerRelativeUrl($ll.RootFolder.ServerRelativeUrl)
+            Write-Output $obj
+        }        
+    }
+}
 
 
 
@@ -203,16 +170,11 @@ param (
 		[bool]$OnQuickLaunch     
 		)
 
-$ll=$ctx.Web.Lists.GetByTitle($ListName)
-    if($PSBoundParameters.ContainsKey("NoCrawl"))
-  {$ll.NoCrawl=$NoCrawl}
-  if($PSBoundParameters.ContainsKey("Title"))
-  {$ll.Title=$Title}
-  if($PSBoundParameters.ContainsKey("Tag"))
-  {$ll.Tag=$Tag}
-  if($PSBoundParameters.ContainsKey("ContentTypesEnabled"))
-  {
-  $ll.ContentTypesEnabled=$ContentTypesEnabled
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
+  if($PSBoundParameters.ContainsKey("NoCrawl")) {$ll.NoCrawl=$NoCrawl}
+  if($PSBoundParameters.ContainsKey("Title")) {$ll.Title=$Title}
+  if($PSBoundParameters.ContainsKey("Tag")){ $ll.Tag=$Tag}
+  if($PSBoundParameters.ContainsKey("ContentTypesEnabled")){ $ll.ContentTypesEnabled=$ContentTypesEnabled
   }
   if($PSBoundParameters.ContainsKey("Description"))
   {
@@ -246,20 +208,16 @@ $ll=$ctx.Web.Lists.GetByTitle($ListName)
   {$ll.OnQuickLaunch=$OnQuickLaunch}
 
       $ll.Update()
-    try
-    {
-
+    
+      try
+       {
         $ctx.ExecuteQuery()
         Write-Host "Done" -ForegroundColor Green
        }
-
-       catch [Net.WebException] 
-        {
-            
+    catch [Net.WebException] 
+        {    
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-
-
 }
 
 
@@ -307,8 +265,7 @@ param (
   $list = $ctx.Web.Lists.Add($lci)
   $ctx.Load($list)
   try
-     {
-       
+     {      
          $ctx.ExecuteQuery()
          Write-Host "List " $Title " has been added. "
      }
@@ -316,8 +273,6 @@ param (
      { 
         Write-Host $_.Exception.ToString()
      }
-
-     
 
 }
 
@@ -355,10 +310,7 @@ function Set-SPOListCheckout
         {
             
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
-        }
-          
-  
-
+        }       
 }
 
 function Set-SPOListVersioning
@@ -370,20 +322,19 @@ function Set-SPOListVersioning
 		[bool]$Enabled=$true
 		)
    
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.EnableVersioning=$Enabled
     $ll.Update()
     
        
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
 
         catch [Net.WebException] 
         {
-            
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
           
@@ -402,24 +353,20 @@ function Set-SPOListMinorVersioning
 		)
   
   
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.EnableMinorVersions=$Enabled
     $ll.Update()
     
-
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
-
         catch [Net.WebException] 
         {
             
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
 
 }
 
@@ -433,22 +380,19 @@ function Remove-SPOListInheritance
 		[bool]$KeepPermissions=$true
 		)
    
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.BreakRoleInheritance($KeepPermissions, $false)
     $ll.Update()
     
-
-        try     {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+        try     
+        {
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
-
         catch [Net.WebException] 
         {        
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
 
 }
 
@@ -460,23 +404,20 @@ function Restore-SPOListInheritance
 		[string]$ListName
 		)
  
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.ResetRoleInheritance()
     $ll.Update()
     
-        try        {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+        try        
+        {
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
 
         catch [Net.WebException] 
-        {
-            
+        { 
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
-
 }
 
 
@@ -489,30 +430,25 @@ function Set-SPOListContentTypesEnabled
 		[bool]$Enabled=$true
 		)
   
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.ContentTypesEnabled=$Enabled
     $ll.Update()
     
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
 
         catch [Net.WebException] 
-        {
-            
+        {           
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
-
 }
 
 
 function Remove-SPOList
 {
-
 <#
 	.link
 	http://social.technet.microsoft.com/wiki/contents/articles/32362.sharepoint-online-spomod-remove-spolist.aspx
@@ -524,12 +460,13 @@ function Remove-SPOList
 		[string]$ListName
 		)
 
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
-    $ll.DeleteObject();
+        $ll=$ctx.Web.Lists.GetByTitle($ListName)
+        $ll.DeleteObject();
+
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
 
         catch [Net.WebException] 
@@ -537,8 +474,6 @@ function Remove-SPOList
            Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
           
-  
-
 }
 
 
@@ -551,23 +486,19 @@ function Set-SPOListFolderCreationEnabled
 		[bool]$Enabled=$true
 		)
   
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.EnableFolderCreation=$Enabled
     $ll.Update()
     
         try
         {
-        $ctx.ExecuteQuery() 
-        Write-Host "Done!" -ForegroundColor DarkGreen             
+            $ctx.ExecuteQuery() 
+            Write-Host "Done!" -ForegroundColor DarkGreen             
         }
-
         catch [Net.WebException] 
-        {
-            
+        {    
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
 
 }
 
@@ -1756,7 +1687,9 @@ param (
    $additionalMultipleFields |%{
 		write-verbose "fieldname :  $($_.fieldname), fieldvalue  $($_.fieldvalue)"	
 		$listItem[$_.fieldname]=$_.fieldvalue
-   }   }
+   }
+   }
+
   $listItem.Update()
   $ll.Update()
   
