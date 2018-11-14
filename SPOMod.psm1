@@ -122,7 +122,6 @@ function Get-SPOList
 
 
 
-
 function Set-SPOList
 {
 
@@ -337,8 +336,6 @@ function Set-SPOListVersioning
         {
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
-          
-  
 
 }
 
@@ -916,10 +913,6 @@ param (
         Write-Host $_.Exception.ToString()
      }
   
- 
-
-
-
 }
 
 
@@ -1347,7 +1340,6 @@ param (
         Write-Host $_.Exception.ToString() -ForegroundColor
      }
 
-     
 }
 
 
@@ -1489,9 +1481,6 @@ Write-Verbose ("Items are ready. Retrieving their properties. It may take a whil
    
   $bobo=Get-SPOListFields -ListTitle $ListTitle 
 
-
-
-
  
  $objArray=@()
 
@@ -1534,12 +1523,10 @@ Write-Verbose ("Items are ready. Retrieving their properties. It may take a whil
 
       #  Write-Host $obj.ID `t $obj.Title
         $objArray+=$obj
-    
    
   }
 
- 
-  
+
   return $objArray
   
   
@@ -1611,11 +1598,6 @@ Write-Host $item["FileRef"]
 
 
 
-
-
-
-
-
 function New-SPOListItem
 {
 
@@ -1676,7 +1658,6 @@ param (
      { 
         Write-Host $_.Exception.ToString()
      }
-
 
 }
 
@@ -1765,7 +1746,6 @@ catch [Net.WebException]
 
   #>
 
-
    param (
         [Parameter(Mandatory=$true,Position=0)]
 		[string]$ListTitle,
@@ -1831,8 +1811,7 @@ catch [Net.WebException]
         Write-Host $_.Exception.ToString()
      }
   
-  
-  }
+ }
 
 
 
@@ -1878,7 +1857,6 @@ catch [Net.WebException]
         Write-Host $_.Exception.ToString()
      }
   
-  
   }
 
 
@@ -1909,9 +1887,6 @@ catch [Net.WebException]
 #
 #
 #
-
-
-
 
 
 
@@ -2029,7 +2004,6 @@ param (
      { 
         Write-Host $_.Exception.ToString()
      }
-
 
 }
 
@@ -2193,7 +2167,6 @@ param (
   Write-Host "False"
   }
   
-
 }
 
 
