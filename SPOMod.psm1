@@ -2540,9 +2540,6 @@ param (
 
         Write-Output $obj
         }
-
-
-
 }
 
 
@@ -2640,9 +2637,6 @@ param(
      { 
         Write-Host $_.Exception.ToString()
      }
-
-     
-
 }
 
 
