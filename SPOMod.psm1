@@ -3055,10 +3055,9 @@ function Get-SPOTermGroups
     $ctx.Load($group.TermSets)
     $ctx.ExecuteQuery()
     Write-Output $group
-
   }
 
-  }
+}
 
   
 function Get-SPOTermSets
