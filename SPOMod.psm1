@@ -21,12 +21,10 @@ function Get-SPOListCount
   <#
 	.link
 	http://social.technet.microsoft.com/wiki/contents/articles/32342.sharepoint-online-spomod-get-spolistcount.aspx
-
   #>
 
   $ctx.Load($ctx.Web.Lists)
   $ctx.ExecuteQuery()
-  
   return $ctx.Web.Lists.Count 
   }
 
@@ -43,7 +41,6 @@ function Get-SPOList
   <#
 	.link
 	http://social.technet.microsoft.com/wiki/contents/articles/32335.sharepoint-online-spomod-get-spolist.aspx
-
   #>
   
   
@@ -64,11 +61,11 @@ function Get-SPOList
         }
         catch
         {
+		#do something
         }
 
         if($IncludeAllProperties)
-        {
-        
+        {     
             $obj = New-Object PSObject
             $obj | Add-Member NoteProperty Title($ll.Title)
             $obj | Add-Member NoteProperty Created($ll.Created)
@@ -105,7 +102,6 @@ function Get-SPOList
             $obj | Add-Member NoteProperty TemplateFeatureId($ll.TemplateFeatureId)
             $obj | Add-Member NoteProperty Views.Count($ll.Views.Count)
             $obj | Add-Member NoteProperty WorkflowAssociations.Count($ll.WorkflowAssociations.Count)
-
             Write-Output $obj
         }
         else
@@ -210,8 +206,8 @@ param (
     
       try
        {
-        $ctx.ExecuteQuery()
-        Write-Host "Done" -ForegroundColor Green
+            $ctx.ExecuteQuery()
+	    Write-Host "Done" -ForegroundColor Green
        }
     catch [Net.WebException] 
         {    
@@ -263,6 +259,7 @@ param (
   }
   $list = $ctx.Web.Lists.Add($lci)
   $ctx.Load($list)
+  
   try
      {      
          $ctx.ExecuteQuery()
@@ -291,7 +288,7 @@ function Set-SPOListCheckout
 		[bool]$ForceCheckout=$true
 		)
  
-  $ll=$ctx.Web.Lists.GetByTitle($ListName)
+    $ll=$ctx.Web.Lists.GetByTitle($ListName)
     $ll.ForceCheckout = $ForceCheckout
     $ll.Update()
     
@@ -306,8 +303,7 @@ function Set-SPOListCheckout
         }
 
         catch [Net.WebException] 
-        {
-            
+        {        
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }       
 }
@@ -360,8 +356,7 @@ function Set-SPOListMinorVersioning
             Write-Host "Done!" -ForegroundColor DarkGreen             
         }
         catch [Net.WebException] 
-        {
-            
+        {          
             Write-Host "Failed" $_.Exception.ToString() -ForegroundColor Red
         }
 
