@@ -535,7 +535,7 @@ function Set-SPOListIRMEnabled
 #
 #
 
-
+#region ViewCmdlets
 
 function Get-SPOListView
 {
@@ -827,6 +827,7 @@ function New-SPOListView
 }
 
 
+#endregion
 
 #
 # 
