@@ -1,4 +1,4 @@
-﻿
+
 #
 # Created by Arleta Wanat, 2015 
 #
@@ -1429,8 +1429,10 @@ function Get-SPOListItems
   {
     [decimal]$NoOfRuns=($NumberOfItemsInTheList/5000)
     $NoOfRuns=[math]::Ceiling($NoOfRuns)
+    $WhichRun = 0
+    $NoOfRunsWithoutResults=0;
 
-    for($WhichRun=0; $WhichRun -lt $NoOfRuns; $WhichRun++)
+    do
     {
         $startIndex=$WhichRun*5000
         $endIndex=$startIndex+5000
@@ -1448,20 +1450,36 @@ function Get-SPOListItems
 			"<Lt><FieldRef Name='ID'></FieldRef><Value Type='Number'>"+$endIndex+"</Value></Lt>"+
 		  "</And></Where></Query></View>"
         }
+    
 
     
-  #  Write-Host $spqQuery.ViewXml
-    $partialItems=$ll.GetItems($spqQuery)
-    $ctx.Load($partialItems)
-    $ctx.ExecuteQuery()
+      #  Write-Host $spqQuery.ViewXml
+        $partialItems=$ll.GetItems($spqQuery)
+        $ctx.Load($partialItems)
+        $ctx.ExecuteQuery()
 
-    foreach($partialItem in $partialItems)
-    {
-        $itemki+=$partialItem
+        foreach($partialItem in $partialItems)
+        {
+            $itemki+=$partialItem
+        }
+
+        # ugly hack to escape infinite loop in case of non-recursive
+        if(!$Recursive -and ($partialItems.Count -eq 0))
+        {
+            $NoOfRunsWithoutResults++;
+
+            # if the query by ID did not find any results x times, end the loop
+            if($NoOfRunsWithoutResults -eq 5)
+            {
+                $NumberOfItemsInTheList = 0;
+            }
+        }
+
     }
-    }
+    while($itemki.Count -lt $NumberOfItemsInTheList)
+
+
   }
-
   else
   {
     $itemki=$ll.GetItems($spqQuery)
