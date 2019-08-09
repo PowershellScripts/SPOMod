@@ -33,8 +33,7 @@ function Get-SPOListCount
 
 function Get-SPOList
 {
-  
-   param (
+ param (
         [Parameter(Mandatory=$false,Position=0)]
 		[switch]$IncludeAllProperties
 		)
