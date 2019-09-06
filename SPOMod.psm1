@@ -3078,7 +3078,7 @@ function Get-SPOTermSets
 param (
 		[Parameter(ParameterSetName="groupName",Mandatory=$true)]
 		[string]$TermGroupName="",
-        [Parameter(ParameterSetName=’groupId’, Mandatory=$false)]
+        [Parameter(ParameterSetName="groupId", Mandatory=$false)]
         [string]$TermGroupId=""
 		)
   
