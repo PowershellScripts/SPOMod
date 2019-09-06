@@ -15,6 +15,7 @@
 #
 
 
+#region SPOList cmdlets
 
 function Get-SPOListCount
 {
@@ -519,6 +520,8 @@ function Set-SPOListIRMEnabled
          
 }
 
+
+#endregion
 
 #
 #
