@@ -1550,41 +1550,42 @@ Write-Verbose ("Items are ready. Retrieving their properties. It may take a whil
 
 
 
-  function Get-SPOListItemVersions
-  {
-   param([Parameter(Mandatory=$true,Position=0)]
-		[string]$ListTitle,
+function Get-SPOListItemVersions
+{
+  param([Parameter(Mandatory=$true,Position=0)]
+	[string]$ListTitle,
         [Parameter(Mandatory=$true,Position=1)]
         [int]$ItemID=0,
         [Parameter(Mandatory=$false,Position=2)]
-		[bool]$IncludeAllProperties=$false)
+	[bool]$IncludeAllProperties=$false)
 
-$ll=$ctx.Web.Lists.GetByTitle($ListTitle)
-$item=$ll.GetItemByID($ItemID)
-$ctx.Load($item)
-$ctx.ExecuteQuery()
-Write-Host $item["FileRef"]
-  $file =$ctx.Web.GetFileByServerRelativeUrl($item["FileRef"]);
+	$ll=$ctx.Web.Lists.GetByTitle($ListTitle)
+	$item=$ll.GetItemByID($ItemID)
+	$ctx.Load($item)
+	$ctx.ExecuteQuery()
+	
+	Write-Host $item["FileRef"]
+  	$file =$ctx.Web.GetFileByServerRelativeUrl($item["FileRef"]);
         $ctx.Load($file)
         $ctx.Load($file.Versions)
-        try{
+        
+	try{
         $ctx.ExecuteQuery() }
         catch
         {
 
         }
-  if($file.Versions.Count -eq 0)
-  {
-   Write-Output "No versions available"
-  }
-  else{
-
-  foreach($vers in $file.Versions)
-  {
-    Write-Output $vers
-  }
-  }
-  }
+	  if($file.Versions.Count -eq 0)
+	  {
+		Write-Output "No versions available"
+	  }
+	  else{
+		  foreach($vers in $file.Versions)
+		  {
+		    Write-Output $vers
+		  }
+	      }
+}
 #
 #
 #
