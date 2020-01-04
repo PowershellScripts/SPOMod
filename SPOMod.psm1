@@ -1342,7 +1342,6 @@ param (
 
 
 
-
 function Get-SPOListFields
 {
 
@@ -1351,7 +1350,6 @@ function Get-SPOListFields
 	http://social.technet.microsoft.com/wiki/contents/articles/32334.sharepoint-online-spomod-cmdlets-resources.aspx
 
   #>
-
 
  param (
         [Parameter(Mandatory=$true,Position=3)]
