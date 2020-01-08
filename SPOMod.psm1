@@ -1,4 +1,3 @@
-test
 #
 # Created by Arleta Wanat, 2015 
 #
