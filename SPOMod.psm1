@@ -127,7 +127,7 @@ function Set-SPOList
   #>
 
 param (
-        [Parameter(Mandatory=$true,Position=0)]
+[Parameter(Mandatory=$true,Position=0)]
 		[string]$ListName,
         [Parameter(Mandatory=$false,Position=1)]
 		[bool]$NoCrawl,
